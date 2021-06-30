@@ -24,12 +24,14 @@ public class PartitionLabels_763 {
     end = map.get(current).get(1);
     for (int i = 1; i < n; i++) {
       current = s.charAt(i);
-      if (map.get(current).get(0) < end) {
-        end = Math.max(end, map.get(current).get(1));
+      int new_start = map.get(current).get(0);
+      int new_end = map.get(current).get(1);
+      if (new_start < end) {
+        end = Math.max(end, new_end);
       } else {
         result.add(end - start + 1);
-        start = map.get(current).get(0);
-        end = map.get(current).get(1);
+        start = new_start;
+        end = new_end;
       }
     }
     result.add(end - start + 1);
