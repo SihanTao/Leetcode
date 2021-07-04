@@ -22,9 +22,10 @@ public class Solution {
       } else {
         char left = s.charAt(l++);
         int left_num = substring_char_count.get(left);
-        substring_char_count.put(left, --left_num);
-        if (left_num == 0) {
+        if (--left_num == 0) {
           substring_char_count.remove(left);
+        } else {
+          substring_char_count.put(left, left_num);
         }
       }
     }
