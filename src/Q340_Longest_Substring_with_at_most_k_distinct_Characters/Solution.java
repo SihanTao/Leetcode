@@ -6,7 +6,7 @@ import java.util.Map;
 public class Solution {
   public int lengthOfLongestSubstringKDistinct(String s, int k) {
     int l = 0, r = 0;
-    String result = "";
+    int maxLength = 0;
 
     if (k == 0) {
       return 0;
@@ -17,16 +17,17 @@ public class Solution {
       char current = s.charAt(r++);
       substring_char_count.put(current, substring_char_count.getOrDefault(current, 0) + 1);
 
-      if (result.length() < r - l + 1 && substring_char_count.keySet().size() <= k) {
-        result = s.substring(l, r);
+      if (maxLength < r - l + 1 && substring_char_count.keySet().size() <= k) {
+        maxLength = r - l;
       } else {
-        substring_char_count.put(s.charAt(l), substring_char_count.get(s.charAt(l)) - 1);
-        if (substring_char_count.get(s.charAt(l)) == 0) {
-          substring_char_count.remove(s.charAt(l));
+        char left = s.charAt(l++);
+        int left_num = substring_char_count.get(left);
+        substring_char_count.put(left, --left_num);
+        if (left_num == 0) {
+          substring_char_count.remove(left);
         }
-        l++;
       }
     }
-    return result.length();
+    return maxLength;
   }
 }
