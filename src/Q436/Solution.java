@@ -16,12 +16,23 @@ public class Solution {
     Arrays.sort(intervals, (x, y) -> x[0] - y[0]);
     for (int i = 0; i < n; i++) {
       int num = -1;
-      for (int j = i; j < n; j++) {
-        if (intervals[j][0] >= intervals[i][1]) {
-          num = hashmap.get(intervals[j]);
+
+      // 二分搜索
+      int left = i;
+      int right = n - 1;
+      while (left<=right) {
+        int mid = left + (right - left) / 2;
+        if (intervals[mid][0] > intervals[i][1]) {
+          num = hashmap.get(intervals[mid]);
+          right = mid - 1;
+        } else if (intervals[mid][0] < intervals[i][1]) {
+          left = mid + 1;
+        } else {
+          num = hashmap.get(intervals[mid]);
           break;
         }
       }
+
       result[hashmap.get(intervals[i])] = num;
     }
     return result;
